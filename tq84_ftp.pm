@@ -16,7 +16,10 @@ sub new { # {{{
   die "tq84_ftp: ${ftp_env}_FTP_PW not defined"   unless $ENV{"${ftp_env}_FTP_PW"};
   die "tq84_ftp: ${ftp_env}_FTP_HOST not defined" unless $ENV{"${ftp_env}_FTP_HOST"};
 
-  my $self = $class->SUPER::new($ENV{"${ftp_env}_FTP_HOST"}) or die "Could not connect to " . $ENV{"${ftp_env}_FTP_HOST"};
+  my $self = $class->SUPER::new($ENV{"${ftp_env}_FTP_HOST"},
+    Debug   => 0,
+    Passive => 1 # 2017-01-19 Passive = 1 seems to be necessary in Eskimo.
+  ) or die "Could not connect to " . $ENV{"${ftp_env}_FTP_HOST"};
 
   $self -> login($ENV{"${ftp_env}_FTP_USER"}, $ENV{"${ftp_env}_FTP_PW"}) or die "Could not login";
   $self -> binary;
