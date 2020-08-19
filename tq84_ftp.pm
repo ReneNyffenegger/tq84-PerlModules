@@ -39,6 +39,8 @@ sub read_private { # {{{
 
   my $host = shift;
   my $mach = Net::Netrc->lookup($host);
+
+  die "Net::Netrc->lookup failed" unless $mach;
 # my $login = $mach->login;
   my ($login, $password, $account) = $mach->lpa;
 
